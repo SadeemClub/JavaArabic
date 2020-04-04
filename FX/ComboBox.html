@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Swing Timer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;" align="center">
+            <p style="font-size: 24px;font-family: Times New Roman,Times,serif,-webkit-standard;"><strong>بسم الله الرحمن الرحيم</strong></p>
+            <h1>قائمة الاختيار ComboBox</h1>
+            <p align="right">بعد عملية إعداد النتبينز والسين بيلدر نقوم بإعداد مشروع JavaFXML جديد وسأسميه FormFXML</p>
+            <img src="imgs/fxml.png">
+            <br><br>
+            <p align="right">نفتح ملف الـFXML باستخدام برنامج الـSceneBuilder بالضغط مرتين بالماوس على الملف المطلوب لنبدأ بالتصميم</p>
+            <img src="imgs/formfxml.png">
+            <br><br>
+            <p align="right">باستخدام SceneBuilder نقوم بسحب خيار ComboBox من لائحة Controls ونضعه في المكان المناسب للواجهة</p>
+            <img src="imgs/1.png">
+            <br><br>
+            <p align="right">نضغط على قائمة الاختيار ComboBox ونختار fx:id مناسب من لائحة Code على اليمين</p>
+            <img src="imgs/2.png">
+            <br><br>
+            <p align="right">والآن ننتقل للبرمجة</p>
+            <p align="right">نقوم بفتح الـController باستخدام النتبينز ونعرف الـComboBox الذي سيحتوي على النصوص بهذه الطريقة</p>
+            <img src="imgs/3.png">
+            <p align="right" >وأنا قمت تعريف Label تحت الزر ﻹظهار النص الذي يتم اختياره</p>
+            <br><br>
+            <p align="right">نذهب للدالة initialize  والتي تكون بشكل افتراضي في الـController ثم ندخل القيم التي نريد أن تظهر في القائمة كنصوص باستخدام دالة </p>
+            <p dir="ltr">getItems().addAll()</p>
+            <br><br>
+            <img src="imgs/4.png">
+            <br><br>
+            <p align="right">للحصول على النص الذي تم اختياره من قائمة الاختيار نستخدم الدالة</p>
+            <p dir="ltr">getSelectionModel().getSelectedItem()</p>
+            <p align="right">ولمسح الاختيارات السابقة والعودة للبداية نستخدم الدالة</p>
+            <p dir="ltr">getSelectionModel().clearSelection()</p>
+            <p align="right">نذهب للدالة التي تكون مبرمجة بشكل افتراضي مع الزر الموضوع في SceneBuilder ونضع فيها الكود المطلوب </p>
+            <p align="right">بحيث يطبع في الـLabel المطلوبة (result) قيمة الـComboBox التي تم اختيارها  (لا تساوي null) في حالة تم اختيار وظيفة أما وفي الحالات الأخرى يطبع رسالة تحذير من نوع  Error ويطلب منه تحديد الوظيفة</p>
+            <img src="imgs/5.png">
+            <br><br>
+            <p>للتعرف على كيفية عمل رسالة تحذير قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br><br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Swing Timer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;" align="center">
+            <p style="font-size: 24px;font-family: Times New Roman,Times,serif,-webkit-standard;"><strong>بسم الله الرحمن الرحيم</strong></p>
+            <br>
+            <p align="right" ><span lang="ar-EG">الـ</span>Timer <span lang="ar-EG">هو كلاس بالجافا من مكتبة&nbsp;</span>swing <span lang="ar-EG">بيتم استدعائه كالتالي</span>..</p>
+            <p dir="ltr" align="left" >import javax.swing.Timer;</p>
+            <br>
+            <img src="imgs/1.png" alt="Timer Class">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">لاستخدام الـ</span>Timer <span lang="ar-EG">يجب أن نعطيه متغيرين لعمل object منه (Timer) جديد.</span></p>
+            <p dir="ltr" align="left">Timer timer = new Timer(1,2);</p>
+            <br>
+            <img src="imgs/2.png" alt="Timer Object">
+            <br>
+            <br>
+            <p dir="rtl" align="right">1- <span lang="ar-EG">المدخل الأول سيكون الوقت الذي ينتظره المؤقت (Timer) قبل تنفيذ method   <span lang="ar-EG">محددة</span>.</p>
+            <p dir="rtl" align="right">(<span lang="ar-EG">الوقت بالملي أي كل&nbsp;</span>1000 <span lang="ar-EG">يساوي ثانية واحدة</span>).<br>2- <span lang="ar-EG">المدخل عبارة عن&nbsp;</span>object <span lang="ar-EG">من نوع&nbsp;</span>ActionListener <span lang="ar-EG">وهو عبارة عن&nbsp;</span>object <span lang="ar-EG">يحتوي على دالة باسم&nbsp;</span>actionPerfomed <span lang="ar-EG">والتي سيتم تنفيذها كُلَ عدد من الثواني بحسب العدد المدخل في الفرع رقم&nbsp;</span>(1).</p>
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">مثال&nbsp;</span>:</p>
+            <br>
+            <img src="imgs/3.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">والآن علينا تشغيل الـ</span>Timer <span lang="ar-EG">وتحديد متى يعمل&nbsp;</span>, <span lang="ar-EG">أبسط طريقة لتشغيل باستخدام دالة&nbsp;</span>start.</p>
+            <br>
+            <img src="imgs/4.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">وهكذا نحصل على عداد يطبع الرقم بالزيادة&nbsp;</span></p>
+            <p dir="rtl" align="right">(<span lang="ar-EG">ملاحظة تم استخدام&nbsp;</span>scanner <span lang="ar-EG">لتثبيت الشاشة ولا أهمية لذلك في الواجهات</span>)</p>
+            <br>
+            <img src="imgs/5.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">والآن نريد أن نصمم&nbsp;</span>Timer <span lang="ar-EG">بحيث ينقص الوقت في&nbsp;</span>Label <span lang="ar-EG">معينة تحتوي على الوقت بصيغة&nbsp;</span>"00:00:00”.</p>
+            <p dir="rtl" align="right"><span lang="ar-EG">نبدأ بتصميم الواجهة&nbsp;</span>(<span lang="ar-EG">اسم ال</span>label <span lang="ar-EG">التي ستحتوي على الوقت والمحددة بالصورة سيكون&nbsp;</span>jLabel2)</p>
+            <br>
+            <img src="imgs/6.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">نقوم بعمل&nbsp;</span>Timer <span lang="ar-EG">في الـ</span>Constructor <span lang="ar-EG">الخاص بالكلاس مباشرة&nbsp;</span>, <span lang="ar-EG">كالتالي</span>.</p>
+            <br>
+            <img src="imgs/7.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">والآن سنقوم بعمل دالة بحيث عندما يتم استدعاؤها تقوم بتنقيص الوقت الموجود في&nbsp;</span>jLabel2 <span lang="ar-EG">لثانية واحدة ليتم استدعاؤها بداخل الـ</span>Timer <span lang="ar-EG">في كل ثانية</span>..</p>
+            <br>
+            <img src="imgs/8.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">بقي علينا أن ننقوم بشرح محتويات الدالة لتنقيص&nbsp;</span>1 <span lang="ar-EG">إلى عدد الثواني في كل مرة</span>.</p>
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">أولاً علينا الحصول على الوقت الموجود&nbsp;</span>(<span lang="ar-EG">حتى نتمكن من الزيادة</span>) <span lang="ar-EG">ويمكن أخذ الثواني والدقائق والساعات من الـ</span>label <span lang="ar-EG">من خلال دالة&nbsp;</span>getText ,<span lang="ar-EG">ثم سيكون مكان الساعات في أول خانتين ثم نتجاهل الخانة الثالثة التي ستحتوي على&nbsp;</span>":” <span lang="ar-EG">ثم الدقائق في الخانتين التاليتين ثم نتجاهل خانة&nbsp;</span>":” <span lang="ar-EG">وأخيراً الثواني في آخر خانتين&nbsp;</span>,<span lang="ar-EG">انظر للكود التالي</span>..</p>
+            <br>
+            <img src="imgs/9.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">الآن نريد القيام بتنقيص الثواني ليعمل العداد كما هو مطلوب, عن طريق </span>(--seconds) <span lang="ar-EG">لكن هذا في حالة لم تكن عدد الثواني&nbsp;0</span><span lang="ar-EG"> لأنه عندنا يكون&nbsp;عدد الثواني يساوي 0 </span><span lang="ar-EG">عند النقصان سيتم التنقيص من عدد الدقائق بقيمة 1 وسيعود عدد الثواني إلى رقم 59 </span><span lang="ar-EG">,كيف ينقص عدد الدقائق ؟ </span></p>
+            <br>
+            <img src="imgs/10.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">نقوم بتنقيص عدد الدقائق من خلال&nbsp;</span>(--mintues), <span lang="ar-EG">لكن هذا في كل الأحوال إلا إذا كان عدد الدقائق&nbsp;</span>0 <span lang="ar-EG">فإننا نرجع عدد الدقائق لـ59 وننقص عدد الساعات بـ1.</span></p>
+            <br>
+            <img src="imgs/11.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">ونقوم بزيادة عدد الساعات بنفس الطريقة ولكن لو أصبح عدد الساعات يساوي صفر لا نقوم بإرجاعه في حالة أصبح&nbsp;</span>12 <span lang="ar-EG">أو أكثر لأن العداد الذي لدينا لا يحتوي على عدد للأيام أو الأسابيع أو الشهور</span>.</p>
+            <br>
+            <img src="imgs/12.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">والآن نريد أن نعيد القيم&nbsp;</span>second , mintues , hours <span lang="ar-EG">إلى نصوص حتى نتكمن من وضعها في الـ</span>jLabel2 <span lang="ar-EG">كما كانت&nbsp;</span>, <span lang="ar-EG">لكن هناك مشكلة وهي أن الرقم لو كان&nbsp;</span>1 <span lang="ar-EG">فإننا عندما نحوله إلى نص لا يصبح&nbsp;</span>01 <span lang="ar-EG">بشكل تلقائي&nbsp;</span>, <span lang="ar-EG">لنظهره كخانتين يجب علينا استخدام&nbsp;</span>String.format <span lang="ar-EG">والتي تعمل كدالة&nbsp;</span>printf <span lang="ar-EG">إلا أنا لا تطبع النتيجة بل ترجعها كنص ونعطيه&nbsp;</span>format <span lang="ar-EG">معينة وهي&nbsp;</span>"%02d” <span lang="ar-EG">ليصبح الرقم في خانتين</span>.</p>
+            <br>
+            <img src="imgs/13.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">ولا ننسى استخدام دالة&nbsp;</span>start <span lang="ar-EG">والتي ستبدأ بتشغيل الـ</span>timer..</p>
+            <br>
+            <img src="imgs/14.png">
+            <br>
+            <p dir="rtl" align="right"><span lang="ar-EG">وإذا أردنا أن نقوم بوظيفة معينة ونعيد المؤقت للقيمة &nbsp;</span>"00:05:00” (5 <span lang="ar-EG">دقائق مثلاً</span>) <span lang="ar-EG">فإننا نقوم بفحص الوقت داخل الدالة&nbsp;</span>decreaseTime <span lang="ar-EG">باستخدام المتغيرات&nbsp;</span>seconds , mintues , hours <span lang="ar-EG">ونقوم بالوظيفة في حالة توفر الشرط كما يظهر بالصورة</span>..</p>
+            <br>
+            <img src="imgs/15.png">
+            <br>
+            <p>للمزيد قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
