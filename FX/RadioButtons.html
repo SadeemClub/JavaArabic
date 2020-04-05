@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Radio Buttons</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" align="center" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;">
+            <p style="text-align: center;"><span style="font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">بسم الله الرحمن الرحيم</span></strong></span></p>
+            <h1>الأزرار الشرطية Radio Buttons</h1>
+            <p align="right">الأزرار الشرطية هي الأزرار التي يمكن اختيار واحد منها في الحالة الواحدة فقط ولا يجوز اختيار أكثر من خيار واحد بنفس الوقت.</p>
+            <img src="imgs/radio.png">
+            <br><br>
+            <p align="right">للقيام بعمل radio button علينا أولاً سحبه من الـSceneBuilder إلى مكانه المناسب , نستطيع سحبه من قائمةControls نجد أن اسمه Radio Button أنظر للصور التالية..</p>
+            <img src="imgs/9.png" >
+            <br><br>
+            <p align="right">نستطيع إعادة تسمية الزر من خلال الضغط عليه مرتين بشكل متتالي بالماوس أو من خلال لائحة Properties الموجودة على اليمين .</p>
+            <img src="imgs/10.png">
+            <br><br>
+            <p align="right">ويجب علينا أن نضع id خاص لكل زر شرطي (Radio Button) وذلك لنتمكن من فحصه لاحقاً بالكود إذا تم اختياره أم لا ونقوم بوضع id له من خلال لائحة Code على اليمين كما يلي..</p>
+            <p align="right">ملاحظة: نقوم بذلك لكلا الزرين الشرطيين</p>
+            <img src="imgs/11.png">
+            <br><br>
+            <p align="right">والآن نذهب إلى الـController من ونقوم بتعريف الأزرار الشرطية المراد التعامل معها بنفس الـid من النوع RadioButton.</p>
+            <img src="imgs/12.png">
+            <br><br>
+            <p align="right">يمكننا معرفة إذا كان الزر تم اختياره أم لا من خلال استخدام دالة isSelected</p>
+            <p align="نضغ شرطاً لمعرفة أي قيمة هي التم تم اختيارها وإظهار رسالة تحذير في حالة لم يتم اختيار أي قيمة كما يلي"></p>
+            <img src="13.png">
+            <br><br>
+            <p align="right">والآن ماذا لو قام المستخدم باختيار الزرين بنفس الوقت ؟ كيف يمكننا منعه من ذلك ؟</p>
+            <p align="right">نقوم بإستخدام الـButton Group وهي ربط أكثر من زر شرطي معاً بحيث لا يمكن اختيار إلا زر واحد في المرة الواحدة حتى لا تحدث مشكلة كهذه (أنظر للصورة التالية)</p>
+            <img src="imgs/14.png">
+            <br><br>
+            <p align="right">نقوم بذلك باستخدام SceneBuilder نضغط على الـRadioButton لنستطيع تعديل الخصائص ثم نعدل الخاصية ToggleGroup الموجودة في لائحة Properties على اليمين.</p>
+            <p align="right">يجب أن يكون لكلا الزرين الشرطيين نفس اسم الـToggle Group لكي يتم ربطهم مع بعضهما بحيث لا يمكن الضغط عليهما بنفس الوقت فحين يتم اختيار أي خيار منهم سيتم تلقائياً إزالة الخيار الآخر.</p>
+            <img src="imgs/15.png">
+            <br><br>
+            <p>للمزيد قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br><br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
