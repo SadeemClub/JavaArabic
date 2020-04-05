@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>رسائل التحذير Alerts</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" align="center" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;">
+            <p style="text-align: center;"><span style="font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">بسم الله الرحمن الرحيم</span></strong></span></p>
+            <br><br>
+            <p align="right">الجداول في الـJavaFX تسمى TableView وتتكون من عدد من الأعمدة (Table Columns) والتي تتكون بدورها من قيم تسمى خلايا (Cells)..</p>
+            <p align="right">لعمل جدول جديد نقوم بفتح SceneBuilder ونسحب الجدول TableView من اللائحة Controls الموجودة على اليمين.</p>
+            <img src="imgs/16.png">
+            <br><br>
+            <p align="right">ثم نستطيع تعديل طول وعرض الجدول من خلال الضغط على أحد أطراف الجدول ثم السحب باستخدام الماوس, فنسحبه حتى يظهر كما بالصورة</p>
+            <img src="imgs/17.png">
+            <br><br>
+            <p align="right">والآن نريد تعديل الأعمدة الموجودة بالجدول , نستطيع تحديد العمود الموجود في الجدول من خلال اللائحة على أسفل اليمين التي تسمى Document من خلال الوصول للجدول والضغط على زر + الموجود بجانبه والضغط على العمود المراد تحديده.</p>
+            <img src="imgs/18.png" >
+            <br><br>
+            <p align="right">يمكننا إضافة عمود جديد من خلال تكرار عمود موجود بالفعل في الجدول بالضغط بالزر اليمين عليه من لائحة Document ثم اختيار  Duplicate.</p>
+            <img src="imgs/19.png">
+            <br><br>
+            <p align="right">ويمكن تعديل اسم الـColumn من خلال التعديل على القيمة Text الموجودة في لائحة Proreties الموجودة على اليمين.</p>
+            <img src="imgs/20.png">
+            <br><br>
+            <p align="right">والآن سننتقل للكود, علينا إنشاء class باسم الـobject الذي يمثله الـTable على سبيل المثال هنا سنستخدم class Employee.</p>
+            <p align="right">بحيث يجب على الـclass أن يحتوي على كل الأعمدة الموجودة بالجدول بنفس الاسم من نوع SimpleStringProperty مع ملاحظة أنه يمكن استخدام قيم أخرى ولكننا استخدمنا النصوص ﻷنها تستطيع التعبير عن كل القيم المطلوبة..</p>
+            <p align="right">ونقوم بكتابة الـconstractor مع الدوال set و get للقيم المطلوبة كما بالصورة التالية.</p>
+            <img src="imgs/21.png">
+            <br><br>
+            <p align="right">والآن يجب علينا تعديل ملف FXML باستخدام النتبينز لتعريف الأعمدة, نقوم بفتح الملف كما بالصورة</p>
+            <img src="imgs/22.png" >
+            <br><br>
+            <p align="right">نريد أن نستخدم خاصية من خصائص الـCell ويمكننا ذلك من خلال وضع الجملة التالية ضمن الـimports كما بالصورة.</p>
+            <p dir="ltr">&lt;?import javafx.scene.control.cell.*?&gt;</p>
+            <img src="imgs/24.png">
+            <br><br>
+            <p align="right">ثم نبحث عن TableView من التاجات الموجودة للوصول إلى التاج فنجد الـTableColumns بالداخل كما بالصورة</p>
+            <img src="imgs/23.png">
+            <br><br>
+            <p align="right">نلاحظ أن الـTableColumns التاجات الخاصة بها تنتهي بالرمز /&gt;</p>
+            <p align="right">نقوم بتعديل نهاية التاج إلى نهاية جديدة لنستطيع إدخال تاجات جديدة بالداخل كما بالصورة التالية..</p>
+            <img src="imgs/25.png">
+            <br><br>
+            <p align="right">والآن بعدما أصبحت نهاية التاج بالطريقة الجديدة نستطيع إدخال تاج جديد داخل التاج القديم, نقوم بوضع التاج التالي داخل TableColumn</p>
+            <p dir="ltr">&lt;cellValueFactory&gt;&lt;/cellValueFactory&gt;</p>
+            <p align="right">ثم نضع القيمة PropertyValueFactory بداخل التاج السابق بتاج جديد كمل يلي</p>
+            <p dir="ltr">&lt;PropertyValueFactory property=&quot;X&quot; /&gt;</p>
+            <p align="right">حيث X تمثل اسم الصف بحسب الـclass الذي قمنا بعمله مسبقاً (SimpleStringProperty) من كلاس (Employee)</p>            
+            <img src="imgs/26.png">
+            <br><br>
+            <p align="right">والآن نذهب إلى الـController ونعرف متغير جديد من نوع TableView بحيث يكون الـobject المستخدم فيه من نوع Employee كما بالصورة.</p>
+            <img src="imgs/27.png">
+            <br><br>
+            <p align="right">والآن نقوم بإضافة قيمة Employee إلى الجدول من خلال عمل object من كلاس Employee واعطائه القيم ومن ثم إضافته للجدول باستخدام الدالة التالية كما بالصورة التي تليها.</p>
+            <p dir="ltr">getItems().add()</p>
+            <img src="imgs/28.png">
+            <br><br>
+            <p align="right">بعد تشغيل البرنامج الآن عند الضغط على الزر سيتم إضافة Employee جديد بالجدول كما يظهر بالصورة.</p>
+            <img src="imgs/29.png">
+            <br><br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
