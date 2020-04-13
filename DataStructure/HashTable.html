@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hash Table</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" align="center" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;">
+            <p style="text-align: center;"><span style="font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">بسم الله الرحمن الرحيم</span></strong></span></p>
+            <p align="right" style="font-size: 20px;font-weight: bold">مقدمة :-</p>
+            <p align="right">نجد أن في معظم الداتا ستركرز الأخرى يمكن إضافة أو حذف البيانات بسرعة ولكن الوصول للبيانات يكون أصعب كلما زاد عدد العناصر المضافة, على سبيل المثال فإن الوصول لعنصر ما في الـLinkedList يكون بالمرور على كل العناصر المضافة داخل الـLinkedList وحتى إذا قمنا بعمل ترتيب (sort) لعناصر الـLinkedList فإن ذلك يجعل إضافة العنصر عملية تطلب وقتاً أطول لذا تم إبتكار الـHashTable.</p>
+            <img src="imgs/1.png">
+            <br><br>
+            <p align="right">ما هي الـHashTable ؟</p>
+            <p align="right">الـHashTable هي مجرد مصفوفة (array) يمكن إضافة أو إزالة أو البحث عن البيانات في داخلها من خلال Key بدلاً من نظام الـIndex المرقم الذي تستخدمه الـarray ويمكن حساب الـKey من خلال الـhash.</p>
+            <p align="right">ويختلف الـHashTable عن الـArray في أننا إذا أردنا الوصول إلى عنصر في الـArray فإنه يلزمنا معرفة الـIndex للوصول للعنصر في O(1) بينما في الـHashTable يلزم Key الذي يمكن الـHashTable من الوصول إلى العنصر المطلوب بـO(1) وبحسب هذا الـKey يقوم الـHashTable بتحديد المكان الذي يجب إضافة العنصر فيه فيصبح الوقت اللازم للإضافة O(1).</p>
+            <img src="imgs/2.png">
+            <br><br>
+            <p align="right">كيف يعمل الـHastTable ؟</p>
+            <p align="right">أولاً الإضافة.</p>
+            <p align="right">يقوم الـHashTable بإضافة عنصر جديد عن طريق حساب الـhash للـKey الخاص بالعنصر ومن ثم يتم استخدام الـhash في إدخال العنصر في المكان المناسب للـHashTable والهاش هي خوارزمية تقوم بحساب نتيجة مختلفة لكل عنصر من العناصر التي يمكن إدخالها في الهاش تيبل.</p>
+            <br><br>
+            <p align="right" style="font-size: 20px;font-weight: bold">مثال على عملية الإضافة</p>
+            <img src="imgs/3.png">
+            <p align="right">للإضافة سيلزم تحديد خوارزمية hashing بحيث تعطي نواتج مختلفة للمدخلات المخلفة, سأفترض أن الخوارزمية هي عملية mod (باقي القسمة) للـKey على 16 بعد تحويل الحروف إلى أرقام وجمعها.</p>
+            <p align="right"> بدءاً من A تساوي 0.</p>
+            <img src="imgs/6.png">
+            <p align="right">وبعد حساب الرقم المطلوب للـKey الخاص بالمدخل نقوم بوضع المدخل بالمكان المناسب حسب الرقم المدخل.</p>
+            <p align="right">مثلاً نريد إدخال القيم التالية:-</p>
+            <img src="imgs/7.png">
+            <p align="right">نقوم بحساب الـhash لكل مدخل كما يلي.</p>
+            <img src="imgs/8.png">
+            <img src="imgs/4.png">
+            <br><br>
+            <p align="right" style="font-size: 20px;font-weight: bold">مثال على عملية الوصول للبيانات</p>
+            <p align="right">إذا أردنا الوصول إلى أي قيمة من القيم الموجودة في الhashtable السابق يجب أن يتوفر لدينا الـKey المناسب, مثلاً نريد الوصول إلى كلمة Hello, نحتاج الـKey المقابل وهو H.</p>
+            <p align="right">ثم نقوم بحساب الهاش الخاص بـH وهو 7.</p>
+            <img src="imgs/5.png">
+            <br><br>
+            <p align="right">وبنفس الطريقة بعد الوصول إلى القيمة يمكننا التعديل عليها أو حذفها وغيرذلك..</p>
+            <p align="right">يمكن بسهولة الوصول ﻷي عنصر والبحث عن أي عنصر بحسب الـKey الخاص به ولكن إن فقدنا الـKey سيتوجب علينا أن نبحث في كل عناصر الـhashTable وكأنها Array عادية.</p>
+            <img src="imgs/9.png">
+            <br><br>
+            <p align="right">والـfunction الخاصة بالهاش التي تم استخدامها بالمثال هي function بسيطة ولا تضمن وجود مشكلة التضارب (Collection) وهي مشكلة تحدث في الـhashTable عند وجود تكرار في الناتج من عملية الـhash للـKey المدخل ويمكن حل هذه المشكلة من خلال استخدام DataStructure آخر مثل HashList بحيث يكون كل عنصر في الـHashTable يؤشر على LinkedList تحتوي على كل القيم التي لها نفس الـhash للـKey.</p>
+            <img src="imgs/10.png">
+            <br><br>
+            <p align="right">ويمكن استخدام functions بحيث تسمح للـKeys بأن تكون أكبر من حرف انجليزي واحد مثل قيم الحروف ثم عمل الـmod أو غير ذلك من الـfunctions التي تصل لقيم مختلفة من القيم المدخلة.</p>
+            <img src="imgs/11.png">
+            <hr>
+            <p align="right" style="font-size: 20px;font-weight: bold">تطبيق الـHashTable بالجافا</p>
+            <p align="right">أولاً نقوم بعمل الـclass باسم HashTable ونضع بداخلها Array التي سنخزن فيها القيم ونسمح للمستخدم بإدخال حجم المدخلات من خلال الـConstructor كما بالصورة التالية.</p>
+            <img src="imgs/a.png">
+            <br><br>
+            <p align="right">ثم نريد حساب الدالة hash التي تعطي نتيجة الKey المدخل كما بالصورة.</p>
+            <img src="imgs/b.png">
+            <br><br>
+            <p align="right">نبرمج دالة الإضافة لتحسب الهاش وتدخل القيمة بحسب الناتج الخاص بالهاش.</p>
+            <img src="imgs/c.png">
+            <br><br>
+            <p align="right">ونبرمج دالة الوصول للقيم بحسب الـKey.</p>
+            <img src="imgs/d.png">
+            <br><br>
+            <p align="right">وأخيراً التطبيق في الـMain..</p>
+            <img src="imgs/main.png">
+            <br><br>
+            <br><br>
+            <p>للمزيد قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br><br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
