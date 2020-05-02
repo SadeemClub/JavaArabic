@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Topological Sort</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" align="center" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;">
+            <p style="text-align: center;"><span style="font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">بسم الله الرحمن الرحيم</span></strong></span></p>
+            <p align="right" style="font-size: 20px;font-weight: bold">مقدمة :-</p>
+            <p align="right">الـTopological Sort هي واحدة من طرق الـsorting أو ترتيب البيانات وتختص بالـDirected Acyclic Graph دوناً عن غيرها من الـDataStructures ..</p>
+            <p align="right">وتتميز هذه الطريقة للـsorting في كونها تعتبر نوع من الـlinear ordering أي انها تقوم بالترتيب بشكل أحادي بحيث تزور كل الأماكن وتقوم بعملية الترتيب للعناصر واحداً تلو الآخر.</p>
+            <br>
+            <p align="right">سنقوم باستخدام الكود التالي للـDirected Acyclic Graph للـIntegers</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code class="keyword">import</code> <code class="plain">java.io.*;&nbsp; </code><br>
+                <code class="keyword">import</code> <code class="plain">java.util.*;&nbsp; </code><br>
+                <div class="line number4 index3 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;</code>&nbsp;</div>
+                <div class="line number7 index6 alt2"><code class="keyword">class</code> <code class="plain">Graph{ </code></div>
+                <div class="line number9 index8 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">private</code> <code class="keyword">int</code> <code class="plain">V;&nbsp;&nbsp; </code><code class="comments">// No. of vertices&nbsp; </code></div>
+                <div class="line number10 index9 alt1"><code class="undefined spaces">&nbsp;</code>&nbsp;</div>
+                <div class="line number11 index10 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="comments">// Adjacency List as ArrayList of ArrayList's </code></div>
+                <div class="line number12 index11 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">private</code> <code class="plain">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj;&nbsp; </code></div>
+                <div class="line number13 index12 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;</code>&nbsp;</div>
+                <div class="line number15 index14 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">Graph(</code><code class="keyword">int</code> <code class="plain">v){ </code></div>
+                <div class="line number17 index16 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">V = v;&nbsp; </code></div>
+                <div class="line number18 index17 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">adj = </code><code class="keyword">new</code> <code class="plain">ArrayList(v);&nbsp; </code></div>
+                <div class="line number19 index18 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">for</code> <code class="plain">(</code><code class="keyword">int</code> <code class="plain">i=</code><code class="value">0</code><code class="plain">; i&lt;v; ++i)&nbsp; </code></div>
+                <div class="line number20 index19 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">adj.add(</code><code class="keyword">new</code> <code class="plain">ArrayList());&nbsp; </code></div>
+                <div class="line number21 index20 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">}&nbsp; </code></div>
+                <div class="line number22 index21 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;</code>&nbsp;</div>
+                <div class="line number24 index23 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">void</code> <code class="plain">addEdge(</code><code class="keyword">int</code> <code class="plain">v,</code><code class="keyword">int</code> <code class="plain">w) { adj.get(v).add(w); }&nbsp; </code></div>
+                <div class="line number25 index24 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;</code>&nbsp;</div>
+                <div class="line number72 index71 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">public</code> <code class="keyword">static</code> <code class="keyword">void</code> <code class="plain">main(String args[]){ </code></div>
+                <div class="line number75 index74 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">Graph g = </code><code class="keyword">new</code> <code class="plain">Graph(</code><code class="value">6</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number76 index75 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">g.addEdge(</code><code class="value">5</code><code class="plain">, </code><code class="value">2</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number77 index76 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">g.addEdge(</code><code class="value">5</code><code class="plain">, </code><code class="value">0</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number78 index77 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">g.addEdge(</code><code class="value">4</code><code class="plain">, </code><code class="value">0</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number79 index78 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">g.addEdge(</code><code class="value">4</code><code class="plain">, </code><code class="value">1</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number80 index79 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">g.addEdge(</code><code class="value">2</code><code class="plain">, </code><code class="value">3</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number81 index80 alt2"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">g.addEdge(</code><code class="value">3</code><code class="plain">, </code><code class="value">1</code><code class="plain">);&nbsp; </code></div>
+                <div class="line number86 index85 alt1"><code class="undefined spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">}&nbsp; </code></div>
+                <div class="line number87 index86 alt2"><code class="plain">}&nbsp; </code></div>
+            </div>
+            <br>
+            <p align="right">الكود السابق يقوم بعمل graph كما ويضع فيها الـNodes والـEdges بدون ترتيب كما بالشكل التالي</p>
+            <img src="imgs/20.png">
+            <br>
+            <br>
+            <b> ترتيب الـGraph</b>
+            <br>
+            <p align="right">أولاً نقوم بعمل Stack بحيث تحتوي على الـvertices التي تم زيارتها وستكون فارغة بالبداية ومصفوفة بحيث تحتوي حالة الزيارة لكل الـvertices..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSort() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Stack stack = new Stack();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;boolean visited[] = new boolean[V];// V is the number of vertices<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <img src="imgs/21.png">
+            <br>
+            <p align="right">ونريد عمل دالة أخرى Recursive لنستخدمها في الوصول إلى كل Vertice ونقوم بالـsorting المناسب لها وسيكون المدخل لهذه الدالة الـArray والـStack والـNode المراد التعامل معاها..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSortUtil(int v, boolean visited[], Stack stack) {<br>
+                    <br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">والآن داخل هذه الدالة سنقوم بزيارة الـvertice ونعدل الـstack والـarray بحيث يظهر أننا قمنا بزيارة هذه الـvertice.</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSortUtil(int v, boolean visited[], Stack stack) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;visited[v] = true;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;// TODO visit vertice here..<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;stack.push(v);<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <img src="imgs/22.png">
+            <br>
+            <p align="right">نريد أن نزور كل الـvertices التي تشير لهم هذه الـvertice ونعمل لهم push بالـstack قبل ان يحدث push لهذه الـvertice بالـstack وذلك سنقوم به في الكود الذي يكون بالوسط بين زيارة الـnode من خلال الـarray ومن خلال الـstack..</p>
+            <p align="right">للوصول لكل الـvertices الموصول باستخدام edges بالـvertice نحصل أولاً على كل الـvertices على شكل ArrayList ثم نقوم بالمرور على كل العناصر باستخدام لوب كما يلي ..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSortUtil(int v, boolean visited[], Stack stack) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;visited[v] = true;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;ArrayList&lt;Integer&gt; list = adj.get(v);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (Integer i : list) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;// TODO something to the vertice<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;stack.push(v);<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">والآن نريد أن نفحص هذه الـvertice لنعرف هل تم زيارتها من قبل أم لا, لو لم يتم زيارتها نريد أن نقوم باستدعاء نفس الـfunction على هذه الـvertice للوصول إلى كل الـedges وكل الـvertices..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSortUtil(int v, boolean visited[], Stack stack) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;visited[v] = true;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;ArrayList&lt;Integer&gt; list = adj.get(v);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (Integer i : list) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!visited[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topologicalSortUtil(i, visited, stack);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;stack.push(v);<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <img src="imgs/23.png">
+            <br><br>
+            <p align="right">بهذا نكون أتتمنا الدالة الـRecursive ولكن لم نطبع أي من الـvertices حتى الآن, الـstack تحتوي على الـvertices بشكل مرتب ولكن لم نقم بطباعتها بعد..</p>
+            <img src="imgs/24.png">          
+            <p align="right">لطباعتها علينا عمل pop لكل عنصر قمنا بإضافته باستخدام push بالـstack وستخرج الـvertices بشكل مرتب كما بالشكل.</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSort() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Stack stack = new Stack();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;boolean visited[] = new boolean[V];// V is the number of vertices<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < V; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!visited[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topologicalSortUtil(i, visited, stack);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    // TODO print Stack conetent here..<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    void topologicalSort() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Stack stack = new Stack();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;boolean visited[] = new boolean[V];// V is the number of vertices<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < V; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!visited[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topologicalSortUtil(i, visited, stack);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;while (stack.empty() == false) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.print(stack.pop() + " ");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    }
+                    <br>
+                </code>
+            </div>
+            <br>
+            <p align="right">بعد أن انتهينا من عمل الـmethods نضيف الأكواد إلى الكود الأصلي الذي بدأنا منه ونقوم باستدعاء الدالة من الـmain ليصبح كما يلي..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 60%;padding: 1%">
+                <code>
+                    import java.util.*;<br>
+                    <br>
+                    class Graph {<br>
+                    <br>
+                    &nbsp;&nbsp;private int V; // No. of vertices <br>
+                    &nbsp;&nbsp;private ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj;<br>
+                    <br>
+                    &nbsp;&nbsp;Graph(int v) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;V = v;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;adj = new ArrayList(v);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < v; ++i) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adj.add(new ArrayList());<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;void addEdge(int v, int w) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;adj.get(v).add(w);<br>
+                    &nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;void topologicalSortUtil(int v, boolean visited[], Stack stack) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;visited[v] = true;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;ArrayList&lt;Integer&gt; list = adj.get(v);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (Integer i : list) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!visited[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topologicalSortUtil(i, visited, stack);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;stack.push(v);<br>
+                    &nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;void topologicalSort() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Stack stack = new Stack();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;boolean visited[] = new boolean[V];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < V; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!visited[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topologicalSortUtil(i, visited, stack);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;while (stack.empty() == false) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.print(stack.pop() + " ");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;public static void main(String args[]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Graph g = new Graph(6);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.addEdge(5, 2);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.addEdge(5, 0);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.addEdge(4, 0);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.addEdge(4, 1);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.addEdge(2, 3);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.addEdge(3, 1);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Following is a Topological sort of the given graph");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;g.topologicalSort();<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <img src="imgs/25.png">
+            <br>
+            <br><br>
+            <br><br>
+            <p>للمزيد قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br><br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
