@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dijkstras Shortest Path</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            img{max-height: 100%;max-width: 100%}
+        </style>
+        <div dir="rtl" align="center" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;">
+            <p style="text-align: center;"><span style="font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">بسم الله الرحمن الرحيم</span></strong></span></p>
+            <p align="right" style="font-size: 20px;font-weight: bold">مقدمة :-</p>
+            <p align="right">الـDijkstras Shortest Path هي طريقة للمعرفة طول أقصر طريق يمكن الوصول إستخدامه للوصول إلى كل النقاط المحددة الأخرى في الـGraph..</p>
+            <p align="right">مثلاً  الصورة التالية تمثل grahp..</p>
+            <img src="imgs/funnygraph.png">
+            <p align="right">لو أردنا الذهاب من البيت إلى الجامعة فكم طول أقصر طريق يمكن لنا أن نسلكه للوصول إلى هذا المكان ؟</p>
+            <p align="right">لبرمجة طريقة الوصول ﻷقصر مسار في الـgraph علينا أولاً استخدام كود الـgraph</p>
+            <br>
+            <p align="right" style="font-size: 20px;font-weight: bold">لنبدأ العمل :-</p>
+            <p align="right">هذا كود ﻷبسط graph يمكن إنشائه..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public class Graph {<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;int vertices;<br>
+                    &nbsp;&nbsp;&nbsp;int edges[][];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public Graph(int vertex) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.vertices = vertex;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edges = new int[vertex][vertex];<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public void addEdge(int source, int destination, int weight) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edges[source][destination] = weight;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edges[destination][source] = weight;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public static void main(String[] args) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int vertices = 6;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graph graph = new Graph(vertices);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(0, 1, 4);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(0, 2, 3);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(1, 2, 1);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(1, 3, 2);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(2, 3, 4);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(3, 4, 2);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(4, 5, 6);<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">دالة ﻹضافة edges والـconstructor يحتوي عدد الـvertices (الأماكن التي يمكن زيارتها) ودالة الـmain التي قمنا بعمل graph جديد بداخلها.</p>
+            <br>
+            <p align="right">والآن نريد برمجة دالة جديدة بحيث تقوم بحساب shortest path وسأقوم بتسميتها dijkstra كما يلي.</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    <br>
+                    }
+                </code>
+            </div>
+            <p align="right">كما نرى الدالة تأخذ متغير واحد من نوع int يمثل الـvertex الذي سنبدأ منه عملية حساب الـshortest path لكل الـvertices بالـgraph.</p>
+            <p align="right">نريد أن نضع مصفوفة لتحدد حالة كل vertex إذا قمنا بزيارتها من قبل أم لا.</p>
+            <p align="right">ومصفوفة أخرى لنضع فيها طول أقصر مسار يمكننا من خلاله الوصول من source vertex إلى كل الـvertices الأخرى, ونلاحظ أن طول كِلا المصفوفتين هو عدد vertices الذي يكون بداخل الـgraph.</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">في البداية لن نكون قد زرنا أي vertex بعد لذا عيلنا أن نضع رقم كبير يمثل عدم زيارنا لهذه النقطة بحيث عن مقارنته يكون أكبر من أي رقم آخر يمثل المسار بين أي إثنين من الـvertices.</p>
+            <p align="right">سأقوم باستخدام Integer.MAX_VALUE بدلاً من Infinity ليدل على الرقم الكبير..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">وبالطبع أول مسار سنقوم بتعبئته هو المسار من الـvertex إلى نفس الـvertex والذي يكون 0 ﻷننا على نفس النقطة..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">والآن نريد حساب أصغر مسار يمكننا سلوكه للوصول إلى أقرب نقطة يمكن الوصول إليها, وﻷننا سنقوم بتكرار هذه العملية نريد عملها في method مختلفة ومن ثم استعدائها وقت الضرورة..</p>
+            <p align="right">سأقوم بتسميه هذه الـmethod بـgetMinimumVertex وسيكون المدخل هو مصفوفة من الـbooleans التي ذكرناها سابقاً لتعرف هل قام بزياردة هذه الـvertex من قبل أم لا وأيضاً الـkeys أو القيم التي تمثل طول المسارات من الـvertex إلى أي vertex أخرى حتى الآن.. (والتي تحتوي على Infinity ولكن سيتم التعديل عليها).</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public int getMinimumVertex(boolean[] mst, int[] key) {<br>
+                    <br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">سيتوجب علينا عمل loop والوصول إلى أقصر طريقة للوصول ﻷقرب vertex ولكن قبلها سنقوم بتعريف متغيرين كما يلي ..</p>
+            <p align="right">متغير يمثل أقرب vertex  وفي بداية هذه الدالة سنقوم باعتبار اقصر vertex هي -1 وهي vertex تخيلية غير موجودة ولكن لو خرجنا من الدالة بهذه القيمة سيمكننا القول أنه لا يوجد طريق أقصر من الطرق الموجودة حالياً  وﻷننا لو خرجنا بقيمة موجبة ربما تكون قيمة vertex موجودة بالفعل مما سيبب خطأ في النتائج.</p>
+            <p align="right">ونريد أن نضع قيمة أصغر طريق للوصول إلى الـvertex التي ذكرناها سابقاً وسيكون الطريقة بالبداية كبير جداً ليكون أكبر من أي طريق آخر عند مقارنته لذا سأجله أيضاً Integer.MAX_VALUE.</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public int getMinimumVertex(boolean[] mst, int[] key) {<br>
+                    &nbsp;&nbsp;&nbsp;int nearest = -1;<br>
+                    &nbsp;&nbsp;&nbsp;int currentMin = Integer.MAX_VALUE;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;return nearest;<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">الآن علينا عمل loop تمر بجميع الـvertices وتضغ قيمة nearest لتصبح الـvertex الجديدة في حالة كانت هذه الـvertex لم يتم زيارتها من قبل وتبعد مسافة أقصر من الـvertex الأخرى</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    private int getMinimumVertex(boolean[] mst, int[] key) {<br>
+                    &nbsp;&nbsp;&nbsp;int nearest = -1;<br>
+                    &nbsp;&nbsp;&nbsp;int currentMin = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (mst[i] == false && currentMin > key[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currentMin = key[i];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nearest = i;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;return nearest;<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">هكذا انتهينا من هذه الدالة ولكن يجب علينا الآن استخدامها بالدالة السابقة dijkstra وسنستخدمها داخل loop لتمر بنا من أقرب vertex إلى التي تليها حتى نصل ﻷبعد vertex يمكن الوصول إليها وسنقوم بتكرار العملية بعدد الـvertices لضمان أن كل الـvertices قد تم الوصول إليهم.</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = getMinimumVertex(visited, distance);<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <p align="right">والآن ما نريد أن نفعل بأقرب vertex بعد أن حصلنا عليها من اللوب هو أن نقوم بزيارتهاوذلك من خلال جعل الـarray التي تحدد حالة الـvisited تصبح true عند الـvertex المطلوبة..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 50%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = getMinimumVertex(visited, distance);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visited[nearest] = true;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <p align="right"> ومن ثم مقارنة طول الطريق من هذه الـvertex إلى باقي الـvertices بعد عدة شروط إذا توافرت فإن الطريق سيكون طريقاً صحيحاً.</p>
+            <p align="right">أولاً يجب أن يكون طول الطريق من الـvertex القريبة إلى أي vertex اخرى <b>أكبر من صف</b>ر ﻷنه لا يوجد طريق بالسالب والطريق بين نقطتين لا يكون صفر الا لو كانت النقطتين متساويتين وهذا يعتبر خطأ بالـgraph.</p>
+            <p align="right">ثانياً أن هذه النقطة يكون <b>لم يتم زيارتها من قبل</b> بعد..</p>
+            <p align="right">ثالثاً أن <b>لا تكون قيمة المسافة الجديدة</b> التي نريد إدخالها تساوي  <b>Infinity</b> (أو Integer.Max في حالتنا..)</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 55%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = getMinimumVertex(visited, distance);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int to = 0; to < vertices; to++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean edgeIsPositive = edges[nearest][to] > 0;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notVisited = (visited[to] == false);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notInfinity = edges[nearest][to] != Integer.MAX_VALUE;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (edgeIsPositive && notVisited && notInfinity) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visited[nearest] = true;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">إذا توافرت الشروط السابقة علينا الآن مقارنة قيمة الـpath الجديد بقيمة الـpath القديم فلو كان أقصر يجب استبداله بقيمة الـpath الجديدة..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 55%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = getMinimumVertex(visited, distance);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int to = 0; to < vertices; to++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean edgeIsPositive = edges[nearest][to] > 0;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notVisited = (visited[to] == false);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notInfinity = edges[nearest][to] != Integer.MAX_VALUE;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (edgeIsPositive && notVisited && notInfinity) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int newKey = edges[nearest][to] + distance[nearest];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (newKey < distance[to]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[to] = newKey;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visited[nearest] = true;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">والآن بعد زيارة كل الـvertices نريد طباعة النتجة.</p>
+            <p align="right">نقوم بعمل loop بعدد الـvertices ونطبع المسافة (متغير distance) من الـsource إلى جميع الـvertices كما يلي..</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 57%;padding: 1%">
+                <code>
+                    public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = getMinimumVertex(visited, distance);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int to = 0; to < vertices; to++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean edgeIsPositive = edges[nearest][to] > 0;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notVisited = (visited[to] == false);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notInfinity = edges[nearest][to] != Integer.MAX_VALUE;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (edgeIsPositive && notVisited && notInfinity) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int newKey = edges[nearest][to] + distance[nearest];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (newKey < distance[to]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[to] = newKey;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visited[nearest] = true;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("V(" + source + ") -> V(" + +i + ") :" + distance[i]);<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">والآن نضع الدالتين داخل الـclass Graph ونستعدي الدالة في الـmain على ونجرب مثلاً الـsouce الـvertex الأولى (رقم 0)</p>
+            <div dir="ltr" align="left" style="background-color: #d6d9dc; margin-left: 10%; width: 60%;padding: 1%">
+                <code>
+                    public class Graph {<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;int vertices;<br>
+                    &nbsp;&nbsp;&nbsp;int edges[][];<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public Graph(int vertex) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.vertices = vertex;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edges = new int[vertex][vertex];<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public void addEdge(int source, int destination, int weight) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edges[source][destination] = weight;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edges[destination][source] = weight;<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;private int getMinimumVertex(boolean[] mst, int[] key) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = -1;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int currentMin = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (mst[i] == false && currentMin > key[i]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currentMin = key[i];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nearest = i;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return nearest;<br>
+                    &nbsp;&nbsp;&nbsp;}
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public void dijkstra(int source) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean[] visited = new boolean[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int[] distance = new int[vertices];<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[i] = Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[source] = 0;<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nearest = getMinimumVertex(visited, distance);<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int to = 0; to < vertices; to++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean edgeIsPositive = edges[nearest][to] > 0;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notVisited = (visited[to] == false);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean notInfinity = edges[nearest][to] != Integer.MAX_VALUE;<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (edgeIsPositive && notVisited && notInfinity) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int newKey = edges[nearest][to] + distance[nearest];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (newKey < distance[to]) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[to] = newKey;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visited[nearest] = true;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < vertices; i++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("V(" + source + ") -> V(" + +i + ") :" + distance[i]);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;public static void main(String[] args) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int vertices = 6;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graph graph = new Graph(vertices);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(0, 1, 4);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(0, 2, 3);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(1, 2, 1);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(1, 3, 2);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(2, 3, 4);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(3, 4, 2);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.addEdge(4, 5, 6);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph.dijkstra(0); // source is 0<br>
+                    &nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </code>
+            </div>
+            <br>
+            <p align="right">النتيجة</p>
+            <img src="imgs/resultd.png">
+            <br>
+            <p align="right">ويمكننا الآن تجربة قيم أخرى ومعرفة طول أقصر طريق من أي نقطة إلى أي نقطة أخرى..</p>
+            <br><br>
+            <p>للمزيد قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
