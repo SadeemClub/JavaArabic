@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>printf method</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            p{font-size: 20px}
+            img{max-height: 100%;max-width: 100%;}
+        </style>
+        <div dir="rtl" align="center" style="padding:10px;border-style:solid;border-width:2px;border-radius:5px;width:85%;margin-left: auto;margin-right: auto;">
+            <p style="text-align: center;"><span style="font-size: 30px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">بسم الله الرحمن الرحيم</span></strong></span></p>
+            <p align="right" style="font-size: 25px;font-weight: bold">مقدمة :-</p>
+            <p align="right">
+                الطباعة في لغة الجافا هي العملية التي تظهر المتغيرات للمبرمجين على الشاشة وتتيح هذه اللغة العديد من الطرق لطباعة النتائج على الشاشة ومن هذه الطرق استخدام دالة print أو println أو printf ولكل واحدة من هذه الدوال فائدة ووقيمة ويمكن أحياناً استخدام واحدة عوضاً على الأخرى ولكن هذا لا يقلل من أهمية تواجد هذه الطرق المتعددة في الطباعة والتي تسهل على المستخدمين عملية الطباعة على الشاشة.
+            </p>
+            <br>
+            <p align="right" style="font-size: 20px;font-weight: bold">لنبدأ العمل :-</p>
+            <p align="right">ما هي دالة printf وما الفرق بينها وبين print و println ؟</p>
+            <p align="right">print = print (وتعني كلمة اطبع)</p>
+            <p align="right">printf = print format (وتعني اطبع بصيغة محددة)</p>
+            <p align="right">println = print line (وتعني اطبع صف أو سطر كامل)</p>
+            <br>
+            <p align="right">دالة printf هي دالة تشبه دالة print وظيفتها هي الطباعة على الشاشة بحسب صيغة (format) محددة يتم ادخالها.</p>
+            <br>
+            <p align="right">إذاً فيجب لاستخدام دالة printf هو أن نعرف ما هي الصيغ التي يمكننا استخدامها في الطباعة, في الصورة التالية يوجد جدول يمثل هذه الصيغ التي يمكن استخدامها في عملية الطباعة.</p>
+            <br><img src="imgs/table.png" alt="جدول printf"><br>
+            <p style="font-size: 16px" align="right">(للتسهيل نلاحظ أن الصيغة مأخوذة من اسم ما يراد طباعته فإذا أردنا طباعة String نأخذ أول حرف منه S ونضع قبله اشارة % لنحصل على الصيغة)</p>
+            <br>
+            <p align="right" style="font-size: 25px;font-weight: bold">كيفية استخدام هذه الصيغ في الطباعة</p>
+            <p align="right">مثال بسيط : لو أردنا أن نطبع واحد فقط كلمة "Hello" فهذا يكون على صيغة نص (String) إذاً الـformat الخاصة به %s طبقاً للجدول..</p>
+            <br><img src="imgs/1.png" alt="صورة 1"><br>
+            <p align="right">وما يحصل بالحقيقة هو استبدال النص بالصيغة الموجودة ومن ثم طباعته..</p>
+            <p align="right">لنقم بمثال توضيحي آخر لو أردنا طباعة كلمة World بعد Hello ومن ثم "\n" لننزل سطر للأسف فيمكن فعل ذلك بالطريقة التالية :</p>
+            <br><img src="imgs/2.png" alt="صورة 2"><br>
+            <p align="right">مثال آخر  يوضح الفرق بين print و printf اذا أردنا أن نطبع جملة Hello ثم اسم شخص باستخدام متغير String فإننا نقوم بالتالي في دالة print و printf:</p>
+            <br><img src="imgs/3.png" alt="صورة 3"><br>
+            <p align="right">نلاحظ أن دالة printf قامت بطباعة النص مثل print تماماً وذلك من خلال الرمز %s ثم اضافة النص الذي نريد طباعته كمتغير منفصل يتبع الـformat.</p>
+            <p align="right">ولا يشترط بالتأكيد استخدام صيغة واحدة فقط في النص الأول في دالة printf فيمكن مثلاً كتابة أكثر من رقم كجزء من النص كما يلي</p>
+            <br><img src="imgs/4.png"><br>
+            <p align="right">ويمكن أيضاً الدمج بين أكثر من صيغة بنفس النص مثلاً</p>
+            <br><img src="imgs/5.png"><br>
+            <p>للمزيد قم بالرجوع <a href="../">للصفحة الرئيسية</a></p>
+            <br>
+            <span lang="ar-EG">والسلام عليكم ورحمة الله وبركاته</span>
+            <br>
+            <p style="text-align: center;font-size: 24px;"><strong><span style="font-family: Times New Roman,Times,serif,-webkit-standard;">لا تنسونا من صالح دعائكم</span></strong></p>
+        </div>
+    </body>
+</html>
